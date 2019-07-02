@@ -3,7 +3,8 @@ import time
 import traceback
 USER_ACCESS_TOKEN = '' # Токен пользователя с правами фото
 
-USER_TARGET = 1 # Ид пользователя Вконтакте
+# Ид пользователя Вконтакте
+USER_TARGET = 1
 
 # Подключение по токену пользователя
 vk_u_session = vk_api.VkApi(token=USER_ACCESS_TOKEN)
@@ -18,12 +19,10 @@ while True:
         # Если количество сохраненнок стало больше
         if (actual_count > old_count):
             new_photos_count = (actual_count - old_count)
-            #print("Detected new saved photos: %s" % new_photos_count)
 
             query = u_api.photos.get(owner_id=USER_TARGET, album_id='saved', count=new_photos_count, rev=1)
 
             for x in query['items']:
-                #print(x['id'])
                 u_api.likes.add(type='photo', owner_id=USER_TARGET, item_id=x['id'])
 
             # Записываем новое количество сохраненнок
